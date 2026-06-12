@@ -1079,6 +1079,74 @@ function topicGamesLeft(topicId){
   return Math.floor(Math.min(...counts)/2);
 }
 
+/* ---------------- CURRENT-GAME PERSISTENCE ----------------
+   Saves the running game (teams, topics, scores, locked Qs, done tiles)
+   to localStorage so a tab reload — Chrome killing the page after the phone
+   sat idle, the user closing and reopening, etc. — never restarts the game. */
+const GAME_KEY='seenjeem_game_v1';
+function saveGame(){
+  if(!storageOK) return;
+  try{
+    const snap={
+      teamA:state.teamA, teamB:state.teamB,
+      chosen:state.chosen,
+      scoreA:state.scoreA, scoreB:state.scoreB,
+      done:state.done, totalTiles:state.totalTiles,
+      used:state.used, locked:state.locked,
+    };
+    window.localStorage.setItem(GAME_KEY, JSON.stringify(snap));
+  }catch(e){}
+}
+function loadGame(){
+  if(!storageOK) return null;
+  try{
+    const raw=window.localStorage.getItem(GAME_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){return null;}
+}
+function clearGame(){
+  if(!storageOK) return;
+  try{ window.localStorage.removeItem(GAME_KEY); }catch(e){}
+}
+function tryResume(){
+  const snap=loadGame();
+  if(!snap || !Array.isArray(snap.chosen) || snap.chosen.length!==6) return false;
+  if(!snap.locked || Object.keys(snap.locked).length===0) return false;
+  state.teamA = snap.teamA || 'Team A';
+  state.teamB = snap.teamB || 'Team B';
+  state.chosen = snap.chosen;
+  state.scoreA = snap.scoreA || 0;
+  state.scoreB = snap.scoreB || 0;
+  state.done = snap.done || {};
+  state.totalTiles = snap.totalTiles || 0;
+  state.used = snap.used || {};
+  state.locked = snap.locked || {};
+  ['sbA','lblA2','fA'].forEach(id=>document.getElementById(id).textContent=state.teamA);
+  ['sbB','lblB2','fB'].forEach(id=>document.getElementById(id).textContent=state.teamB);
+  document.querySelectorAll('#awA span,#cAwA span').forEach(e=>e.textContent=state.teamA+' get points');
+  document.querySelectorAll('#awB span,#cAwB span').forEach(e=>e.textContent=state.teamB+' get points');
+  buildBoard();
+  // re-mark already-played tiles
+  Object.keys(state.done).forEach(tileId=>{
+    const t=document.getElementById('tile-'+tileId);
+    if(t){
+      const tier=tileId.split('-')[1];
+      t.classList.add('done');
+      t.innerHTML=tier+' <small>✓</small>';
+    }
+  });
+  updateScores();
+  // if the prior game had completed before the reload, jump straight to the final screen
+  if(Object.keys(state.done).length >= state.totalTiles && state.totalTiles>0){
+    showGameOver();
+    return true;
+  }
+  show('s-board');
+  toast('Welcome back — game resumed');
+  return true;
+}
+
 /* ---------------- HELPERS ---------------- */
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1192,6 +1260,7 @@ function startGame(){
   lockBoard();         // seed every tile's question ONCE per game
   buildBoard();
   updateScores();
+  saveGame();          // persist so a tab reload mid-game resumes cleanly
   show('s-board');
 }
 
@@ -1355,6 +1424,7 @@ function award(who){
   stopTimer();
   state.current=null;
   updateScores();
+  saveGame();
   checkGameOver();
 }
 
@@ -1403,6 +1473,7 @@ function resetGame(){
   lockBoard();   // re-seed with a fresh set of questions
   buildBoard();
   updateScores();
+  saveGame();
   show('s-board');
 }
 
@@ -1411,6 +1482,7 @@ function quickAdj(team,delta){
   if(team==='A')state.scoreA=Math.max(0,state.scoreA+delta);
   else state.scoreB=Math.max(0,state.scoreB+delta);
   updateScores();
+  saveGame();
 }
 
 /* ---------------- FLAG / REVIEW SYSTEM ---------------- */
@@ -1568,6 +1640,7 @@ function checkGameOver(){
   }
 }
 function showGameOver(){
+  clearGame();   // game finished — wipe the in-progress snapshot
   document.getElementById('fApts').textContent=state.scoreA;
   document.getElementById('fBpts').textContent=state.scoreB;
   let winnerTxt;
@@ -1583,6 +1656,7 @@ loadFlags();
 loadConsumed();
 updateFlagCount();
 renderTopics();
+tryResume();   // if a game was in progress before a tab reload, jump straight back to it
 </script>
 </body>
 </html>
