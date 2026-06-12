@@ -120,29 +120,31 @@
   .bar h2{font-family:'Bebas Neue';font-size:34px;letter-spacing:2px;}
 
   /* ---------- Board ---------- */
-  .board{display:flex;flex-direction:column;gap:14px;margin-bottom:120px;}
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:96px;}
   .topicrow{
-    display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:12px;align-items:stretch;
+    display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;
     background:linear-gradient(90deg,rgba(45,212,191,.06),transparent,rgba(244,114,182,.06));
-    border:1px solid var(--line);border-radius:20px;padding:12px;
+    border:1px solid var(--line);border-radius:18px;padding:10px;
   }
   .ptcol{display:flex;flex-direction:column;gap:10px;}
   .center-cell{
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-    background:linear-gradient(180deg,var(--panel2),var(--bg2));border-radius:16px;padding:10px;border:1px solid var(--line);
+    background:linear-gradient(180deg,var(--panel2),var(--bg2));border-radius:14px;padding:8px 10px;border:1px solid var(--line);min-width:72px;
   }
-  .center-cell .ico{font-size:44px;}
-  .center-cell .nm{font-weight:900;font-size:18px;margin-top:6px;letter-spacing:.5px;}
+  .center-cell .ico{font-size:30px;}
+  .center-cell .nm{font-weight:900;font-size:13px;margin-top:4px;letter-spacing:.3px;line-height:1.15;}
   .tile{
-    flex:1;border:none;border-radius:14px;cursor:pointer;font-family:'Bebas Neue';font-size:30px;letter-spacing:2px;
-    color:#1a1408;padding:14px 0;min-height:64px;
+    flex:1;border:none;border-radius:12px;cursor:pointer;font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;
+    color:#1a1408;padding:8px 0;min-height:42px;
     background:linear-gradient(180deg,var(--orange-soft),var(--orange));
-    box-shadow:0 5px 0 var(--orange-deep);transition:transform .08s;
+    box-shadow:0 4px 0 var(--orange-deep);transition:transform .08s;
     display:flex;align-items:center;justify-content:center;gap:6px;
   }
   .tile:active{transform:translateY(3px);box-shadow:0 2px 0 var(--orange-deep);}
-  .tile.done{background:#2a2a4d;color:#5b5b86;box-shadow:0 5px 0 #1c1c38;cursor:not-allowed;}
-  .tile small{font-size:13px;font-family:'Cairo';font-weight:700;opacity:.7;letter-spacing:0;}
+  .tile.done{background:#2a2a4d;color:#5b5b86;box-shadow:0 4px 0 #1c1c38;cursor:not-allowed;}
+  .tile small{font-size:11px;font-family:'Cairo';font-weight:700;opacity:.7;letter-spacing:0;}
+  .tile.tA{border-bottom:3px solid var(--teamA);}
+  .tile.tB{border-bottom:3px solid var(--teamB);}
   .sidelabel{text-align:center;font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;font-weight:700;}
 
   /* ---------- Scoreboard ---------- */
@@ -150,7 +152,7 @@
     position:fixed;left:0;right:0;bottom:0;z-index:40;
     background:linear-gradient(180deg,rgba(21,21,42,.4),rgba(21,21,42,.97));
     backdrop-filter:blur(8px);border-top:1px solid var(--line);
-    display:flex;gap:12px;padding:14px 18px;justify-content:center;
+    display:flex;gap:12px;padding:14px 18px;justify-content:space-between;
   }
   .scorecard{
     flex:1;max-width:380px;display:flex;align-items:center;justify-content:space-between;gap:14px;
@@ -287,12 +289,68 @@
     opacity:0;transition:transform .3s ease,opacity .3s ease;}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
-  @media(max-width:600px){
-    .topicrow{grid-template-columns:1fr 1.3fr 1fr;}
-    .tile{font-size:24px;min-height:54px;}
-    .scorecard .pts{font-size:32px;}
-    .center-cell .ico{font-size:34px;}
-    .center-cell .nm{font-size:14px;}
+  /* ---------- Alphabet hint grid (Letters) ---------- */
+  .abcgrid{display:grid;grid-template-columns:repeat(13,1fr);gap:5px;max-width:640px;margin:14px auto 0;}
+  .abc{padding:7px 0;border-radius:9px;background:var(--panel);border:1px solid var(--line);color:var(--muted);
+    font-weight:800;font-size:15px;text-align:center;}
+  .abc.lit{background:linear-gradient(180deg,var(--orange-soft),var(--orange));color:#1a1408;border-color:var(--orange);
+    box-shadow:0 0 16px rgba(255,122,26,.55);transform:scale(1.12);}
+
+  /* ---------- Landscape-first ---------- */
+  #rotateHint{display:none;position:fixed;inset:0;z-index:300;background:var(--bg);
+    align-items:center;justify-content:center;text-align:center;padding:30px;}
+  #rotateHint .em{font-size:56px;}
+  #rotateHint .big{font-size:26px;font-weight:900;margin:12px 0 6px;}
+  #rotateHint p{color:var(--muted);line-height:1.7;}
+  @media (orientation:portrait){
+    #rotateHint{display:flex;}
+  }
+
+  /* compact tuning for phone-sized landscape screens */
+  @media (orientation:landscape) and (max-height:520px){
+    .screen{padding:10px 14px;}
+    .bar{margin-bottom:8px;gap:8px;}
+    .bar h2{font-size:24px;}
+    .board{gap:8px;margin-bottom:64px;}
+    .topicrow{padding:6px;gap:6px;border-radius:14px;}
+    .ptcol{gap:5px;}
+    .tile{font-size:16px;min-height:30px;padding:4px 0;border-radius:10px;box-shadow:0 3px 0 var(--orange-deep);}
+    .tile small{font-size:9px;}
+    .center-cell{min-width:58px;padding:4px 6px;}
+    .center-cell .ico{font-size:20px;}
+    .center-cell .nm{font-size:10px;margin-top:2px;}
+    .scorebar{padding:6px 12px;}
+    .scorecard{padding:5px 12px;border-radius:12px;gap:8px;}
+    .scorecard .who{font-size:13px;}
+    .scorecard .pts{font-size:24px;}
+    .adj{width:32px;height:32px;font-size:18px;border-radius:9px;}
+    .btn.mini{padding:6px 10px;font-size:12px;}
+    .pill{padding:5px 10px;font-size:12px;}
+    .pill.points{font-size:17px;}
+    .timer{font-size:30px;min-width:76px;}
+    .qhead{margin-bottom:8px;}
+    .qtext{font-size:clamp(20px,7vh,34px);margin:10px 0;}
+    .qtype{font-size:11px;margin-bottom:6px;}
+    .answer{padding:14px;margin:12px auto;}
+    .answer .val{font-size:clamp(20px,7vh,36px);}
+    .actions{margin:12px auto 28px;gap:10px;}
+    .actions .row{gap:10px;}
+    .actions .row .btn{padding:12px;font-size:15px;min-width:150px;}
+    .abcgrid{gap:4px;margin-top:8px;}
+    .abc{font-size:12px;padding:4px 0;border-radius:7px;}
+    .brand h1{font-size:clamp(36px,7vh,64px);}
+    .brand{margin:4px 0 14px;}
+    .btn{padding:12px 18px;font-size:16px;}
+    .card{padding:16px;}
+    input.txt{padding:10px 14px;font-size:17px;}
+    label.fld{margin:10px 0 5px;font-size:11px;}
+    .topic{min-height:104px;padding:12px 8px;gap:5px;}
+    .topic .ico{font-size:28px;}
+    .topic .nm{font-size:13px;}
+    .charades-msg .big{font-size:clamp(22px,7vh,38px);}
+    .charades-msg .em{font-size:48px;}
+    .secret{padding:18px;margin:14px auto;}
+    .secret .word{font-size:clamp(24px,8vh,44px);}
   }
 </style>
 </head>
@@ -335,7 +393,7 @@
 <section id="s-board" class="screen">
   <div class="wrap">
     <div class="bar">
-      <h2>The Board</h2>
+      <h2>SEEN JEEM</h2>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
         <div class="pill team" style="color:var(--teamA)">L = <span id="lblA2">Team A</span></div>
         <div class="pill team" style="color:var(--teamB)">R = <span id="lblB2">Team B</span></div>
@@ -502,6 +560,14 @@
   </div>
 </section>
 
+<div id="rotateHint">
+  <div>
+    <div class="em">📱↻</div>
+    <div class="big">Rotate your phone</div>
+    <p>Seen Jeem plays in landscape.<br>Turn your phone sideways (make sure rotation lock is off).</p>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
@@ -530,7 +596,7 @@ const TOPICS = [
 const BANK = {
   letters:{
     200:[
-      {q:"What is the largest planet in our solar system?",a:"Jupiter"},
+      {q:"What is the only continent that lies in all four hemispheres?",a:"Africa"},
       {q:"What is the capital city of Japan?",a:"Tokyo"},
       {q:"What is the tallest land animal?",a:"Giraffe"},
       {q:"What is the fastest land animal?",a:"Cheetah"},
@@ -550,15 +616,17 @@ const BANK = {
       {q:"What is the king of the jungle commonly called?",a:"Lion"},
       {q:"What do caterpillars turn into?",a:"Butterfly"},
       {q:"Which reptile is famous for changing its colour to blend with its surroundings?",a:"Chameleon"},
-      {q:"What is the tallest mountain on Earth?",a:"Everest"},
+      {q:"What is the name of the imaginary line at 0° latitude that splits Earth into northern and southern halves?",a:"Equator"},
       {q:"What is the main language spoken in Egypt?",a:"Arabic"},
       {q:"Who wrote the plays 'Romeo and Juliet' and 'Hamlet'?",a:"Shakespeare"},
+      {q:"What is the painting by Leonardo da Vinci of a smiling woman called?",a:"Mona Lisa"},
+      {q:"Which scientist developed the theory of relativity?",a:"Einstein"},
     ],
     400:[
       {q:"What is the smallest country in the world by area?",a:"Vatican"},
       {q:"What is the longest river in the world?",a:"Nile"},
       {q:"What is the powerhouse of the cell?",a:"Mitochondria"},
-      {q:"Which scientist developed the theory of relativity?",a:"Einstein"},
+      {q:"Which planet in our solar system rotates on its side?",a:"Uranus"},
       {q:"What is the largest desert in the world (by definition, the cold one)?",a:"Antarctica"},
       {q:"What is the study of weather called?",a:"Meteorology"},
       {q:"What is the most spoken native language in the world?",a:"Mandarin"},
@@ -573,13 +641,15 @@ const BANK = {
       {q:"What is the process by which plants make food using sunlight?",a:"Photosynthesis"},
       {q:"What is the capital of Australia?",a:"Canberra"},
       {q:"What is the gas that makes up most of Earth's atmosphere?",a:"Nitrogen"},
-      {q:"What is the painting by Leonardo da Vinci of a smiling woman called?",a:"Mona Lisa"},
+      {q:"Which sea creature has three hearts and blue blood?",a:"Octopus"},
       {q:"What is the largest species of big cat?",a:"Tiger"},
       {q:"What is the name of the galaxy we live in?",a:"Milky Way"},
       {q:"What is the hardest working muscle in the body, that never rests?",a:"Heart"},
+      {q:"What is the study of the structure and function of the nervous system called?",a:"Neuroscience"},
+      {q:"What is the term for an animal that eats both plants and meat?",a:"Omnivore"},
     ],
     600:[
-      {q:"Which noble gas, atomic number 54, is used in high-intensity car headlamps and ion thrusters?",a:"Xenon"},
+      {q:"Which noble gas is used in high-intensity car headlamps and spacecraft ion thrusters?",a:"Xenon"},
       {q:"What is the rarest naturally occurring element in the Earth's crust?",a:"Astatine"},
       {q:"What is the only metal that is liquid at room temperature?",a:"Mercury"},
       {q:"What is the largest moon of Saturn, and the only moon with a dense atmosphere?",a:"Titan"},
@@ -587,13 +657,13 @@ const BANK = {
       {q:"What is the medical term for the voice box?",a:"Larynx"},
       {q:"Which ancient wonder stood at the harbour of the island of Rhodes?",a:"Colossus"},
       {q:"What is the SI unit of electrical resistance?",a:"Ohm"},
-      {q:"What is the highly reactive element, symbol P, essential to DNA, that glows in the dark?",a:"Phosphorus"},
+      {q:"Which element, essential to DNA and bones, glows faintly in the dark and ignites easily in air?",a:"Phosphorus"},
       {q:"What is the name for a word that reads the same forwards and backwards?",a:"Palindrome"},
       {q:"What is the hard protein that makes up hair, nails, and animal horns?",a:"Keratin"},
       {q:"Which Greek letter is used in physics to represent wavelength?",a:"Lambda"},
-      {q:"What is the dense metal, symbol W, with the highest melting point of all metals?",a:"Tungsten"},
+      {q:"Which metal has the highest melting point of any metal?",a:"Tungsten"},
       {q:"What is the curved path of a projectile under gravity called?",a:"Parabola"},
-      {q:"What is the study of the structure and function of the nervous system called?",a:"Neuroscience"},
+      {q:"Which organelle digests and recycles a cell's waste, nicknamed the cell's recycling centre?",a:"Lysosome"},
       {q:"What is the largest artery in the human body?",a:"Aorta"},
       {q:"What is the term for a substance that speeds up a chemical reaction without being consumed?",a:"Catalyst"},
       {q:"What ancient language are most modern scientific species names based on?",a:"Latin"},
@@ -601,7 +671,7 @@ const BANK = {
       {q:"What is the name of the deepest point in Earth's oceans, in the Pacific?",a:"Mariana Trench"},
       {q:"What is the protein in red blood cells that carries oxygen?",a:"Haemoglobin"},
       {q:"What is the mathematical constant approximately equal to 2.718?",a:"Euler's number (e)"},
-      {q:"What is the term for an animal that eats both plants and meat?",a:"Omnivore"},
+      {q:"What is the term for the time needed for half of a radioactive substance to decay?",a:"Half-life"},
       {q:"What is the outermost layer of the Earth called?",a:"Crust"},
     ],
   },
@@ -611,14 +681,14 @@ const BANK = {
       {q:"How many players from one team are on the pitch at kickoff?",a:"11"},
       {q:"Which country won the 2022 FIFA World Cup?",a:"Argentina"},
       {q:"Which European club competition is contested between the top clubs across Europe each season?",a:"Champions League"},
-      {q:"What colour card means a player is sent off?",a:"Red card"},
+      {q:"Which English club is nicknamed 'The Citizens'?",a:"Manchester City"},
       {q:"Which country has won the most men's World Cups?",a:"Brazil"},
       {q:"Which body part can a goalkeeper use in the box that outfield players cannot?",a:"Hands"},
       {q:"How many points are awarded for a win in most leagues?",a:"3"},
       {q:"Real Madrid plays its home games in which country?",a:"Spain"},
       {q:"Which player is nicknamed 'The Egyptian King' at Liverpool?",a:"Mohamed Salah"},
       {q:"What is it called when one player scores three goals in a match?",a:"Hat-trick"},
-      {q:"How many minutes long is each half of a standard football match?",a:"45"},
+      {q:"Which Italian club shares the San Siro stadium with AC Milan?",a:"Inter Milan"},
       {q:"What shape is a football (soccer ball)?",a:"Sphere"},
       {q:"Cristiano Ronaldo most famously wears which shirt number?",a:"7"},
       {q:"Which competition is contested by European national teams every four years?",a:"Euros"},
@@ -635,14 +705,14 @@ const BANK = {
       {q:"Which club has won the most UEFA Champions League titles?",a:"Real Madrid"},
       {q:"In what year was the first ever FIFA World Cup held? (±1 year)",a:"1930",leeway:"±1 year"},
       {q:"In what year did Spain win their first FIFA World Cup? (±1 year)",a:"2010",leeway:"±1 year"},
-      {q:"Which German club is based in Munich and nicknamed 'Die Roten'?",a:"Bayern Munich"},
+      {q:"Which club has won the second-most European Cup / Champions League titles after Real Madrid?",a:"AC Milan"},
       {q:"Who scored the 'Hand of God' goal at the 1986 World Cup?",a:"Diego Maradona"},
       {q:"Which Italian club is nicknamed 'I Bianconeri'?",a:"Juventus"},
       {q:"Who is the all-time top scorer in men's World Cup history (as of 2022)?",a:"Miroslav Klose"},
       {q:"What is the maximum number of substitutions allowed in most modern matches?",a:"5"},
       {q:"Which country won the first European Championship in 1960?",a:"Soviet Union"},
       {q:"Which manager led Manchester United during the 1999 treble?",a:"Alex Ferguson"},
-      {q:"What is the home stadium of FC Barcelona called?",a:"Camp Nou"},
+      {q:"Which club did Thierry Henry join when he left Arsenal in 2007?",a:"Barcelona"},
       {q:"In the 2011-12 season, Lionel Messi set the record for most goals in a calendar year. How many?",a:"91"},
       {q:"Which country won the 2014 World Cup, hosted in Brazil?",a:"Germany"},
       {q:"Which French forward won the 2022 World Cup Golden Boot?",a:"Kylian Mbappé"},
@@ -667,7 +737,7 @@ const BANK = {
       {q:"Which Italian club was stripped of two titles and relegated in the 2006 Calciopoli scandal?",a:"Juventus"},
       {q:"Which African nation reached the World Cup semi-finals in 2022, a first for Africa?",a:"Morocco"},
       {q:"Who was the top scorer at the 1986 World Cup, an England striker?",a:"Gary Lineker"},
-      {q:"Which club won the first ever Premier League season in 1992-93?",a:"Manchester United"},
+      {q:"Which club finished runners-up in the first ever Premier League season (1992-93)?",a:"Aston Villa"},
       {q:"Which goalkeeper is nicknamed 'The Black Spider' and played for the Soviet Union?",a:"Lev Yashin"},
       {q:"Who managed the France team that won the 1998 World Cup?",a:"Aimé Jacquet"},
       {q:"Which Argentine goalkeeper won the Golden Glove at the 2022 World Cup?",a:"Emiliano Martínez"},
@@ -675,7 +745,7 @@ const BANK = {
       {q:"Which German captain lifted the World Cup in 1990 as a player and later won it as a manager?",a:"Franz Beckenbauer"},
       {q:"Which club knocked Barcelona out 4-0 on aggregate after losing the first leg, in a 2017 Champions League comeback by Barça (the 6-1)?",a:"Paris Saint-Germain"},
       {q:"Who scored the winning penalty in the 2008 Champions League final shootout for Manchester United?",a:"Anderson (or note: van der Sar saved the last)"},
-      {q:"Which country has appeared in every single World Cup tournament?",a:"Brazil"},
+      {q:"Who captained Brazil's legendary 1970 World Cup-winning team?",a:"Carlos Alberto"},
       {q:"What was the final score when Germany beat Brazil in the 2014 World Cup semi-final?",a:"7-1"},
       {q:"Which Welsh forward moved to Real Madrid for a then-world-record fee in 2013?",a:"Gareth Bale"},
     ],
@@ -695,9 +765,9 @@ const BANK = {
       {q:"What green ogre stars in his own DreamWorks film?",a:"Shrek"},
       {q:"What is the name of Batman's home city?",a:"Gotham"},
       {q:"Which superhero can climb walls and shoot webs?",a:"Spider-Man"},
-      {q:"Which TV show features a chemistry teacher named Walter White?",a:"Breaking Bad"},
+      {q:"Which long-running animated show follows a family living in Springfield?",a:"The Simpsons"},
       {q:"Which 2009 Pixar film features an old man flying his house with thousands of balloons?",a:"Up"},
-      {q:"Which movie features dinosaurs brought back to life in a theme park?",a:"Jurassic Park"},
+      {q:"In which 1985 film does Marty McFly travel through time in a DeLorean?",a:"Back to the Future"},
       {q:"What is the name of the green Jedi master who speaks in reversed sentences?",a:"Yoda"},
       {q:"Which Pixar film follows a young Mexican boy who journeys to the Land of the Dead to find his musician ancestor?",a:"Coco"},
       {q:"What colour is the ogre Shrek?",a:"Green"},
@@ -710,7 +780,7 @@ const BANK = {
       {q:"In what year was the first 'Avengers' movie released? (±1 year)",a:"2012",leeway:"±1 year"},
       {q:"Who played Captain Jack Sparrow in Pirates of the Caribbean?",a:"Johnny Depp"},
       {q:"In 'Game of Thrones', which house does Jon Snow grow up in?",a:"Stark"},
-      {q:"Which 1994 Best Picture winner follows a man named Forrest?",a:"Forrest Gump"},
+      {q:"Which 1999 film starring Brad Pitt and Edward Norton is famous for the rule 'you do not talk about it'?",a:"Fight Club"},
       {q:"Who voices Woody in Toy Story?",a:"Tom Hanks"},
       {q:"What movie features the line 'I'll be back'?",a:"The Terminator"},
       {q:"Which Pixar film takes place inside the mind of a girl named Riley?",a:"Inside Out"},
@@ -722,7 +792,7 @@ const BANK = {
       {q:"Who plays Tony Stark / Iron Man in the Marvel films?",a:"Robert Downey Jr."},
       {q:"Which animated studio created 'Toy Story' and 'Finding Nemo'?",a:"Pixar"},
       {q:"In 'The Lord of the Rings', what is the name of the wizard played by Ian McKellen?",a:"Gandalf"},
-      {q:"Which sci-fi franchise features the Death Star?",a:"Star Wars"},
+      {q:"Which actor played Han Solo in the original 'Star Wars' trilogy?",a:"Harrison Ford"},
       {q:"Who directed 'Jaws', 'E.T.', and 'Jurassic Park'?",a:"Steven Spielberg"},
       {q:"Which 2009 James Cameron film, set on Pandora, was the first to gross over $2 billion?",a:"Avatar"},
       {q:"What is the name of the prison island in the show 'Prison Break'? (general show fame)",a:"Fox River (the show is Prison Break)"},
@@ -749,7 +819,7 @@ const BANK = {
       {q:"Who directed 'Parasite'?",a:"Bong Joon-ho"},
       {q:"Which film won the most Oscars ever, tied at 11, alongside Ben-Hur and Titanic (the 2003 fantasy finale)?",a:"The Lord of the Rings: The Return of the King"},
       {q:"What is the highest-grossing animated film franchise featuring yellow creatures?",a:"Despicable Me / Minions"},
-      {q:"Which actor played both the Joker (2008) and was the subject of a posthumous Oscar?",a:"Heath Ledger"},
+      {q:"Which actor has won three Best Actor Oscars, including for 'There Will Be Blood' and 'Lincoln'?",a:"Daniel Day-Lewis"},
       {q:"Who wrote and directed 'Get Out' (2017)?",a:"Jordan Peele"},
     ],
   },
@@ -794,7 +864,7 @@ const BANK = {
       {q:"What was the name of Prophet Ibrahim's first son? (Quran)",a:"Isma'il (Ishmael)"},
       {q:"What was the name of Prophet Ibrahim's second son, father of Ya'qub? (Quran)",a:"Ishaq (Isaac)"},
       {q:"Which prophet built and preached for a very long time before the great flood? (Quran)",a:"Nuh (Noah)"},
-      {q:"In Sahih hadith, what was the first thing Prophet Muhammad ﷺ was commanded to do at revelation?",a:"Read / Recite (Iqra)"},
+      {q:"At which battle did the Muslims dig a trench around Madinah to defend against the confederate armies? (Sahih)",a:"Battle of al-Khandaq (the Trench)"},
       {q:"Who was the closest companion of the Prophet ﷺ, who accompanied him in the cave during the Hijrah? (Sahih)",a:"Abu Bakr (as-Siddiq)"},
       {q:"What is the name of the angel responsible for the trumpet on the Day of Judgement? (Sahih)",a:"Israfil"},
       {q:"Which prophet is described as being given wisdom even as a young boy and was the son of Zakariyya's prayer? (Quran)",a:"Yahya (John)"},
@@ -804,21 +874,21 @@ const BANK = {
       {q:"According to the Quran, roughly how many years did Prophet Nuh call his people to Allah? (exact figure given in Surah Al-Ankabut)",a:"950 years"},
       {q:"Which prophet met a righteous servant of Allah (Al-Khidr) to learn patience, in Surah Al-Kahf? (Quran)",a:"Musa (Moses)"},
       {q:"Which prophet asked Allah to show him how He brings the dead to life, using four birds? (Quran)",a:"Ibrahim (Abraham)"},
-      {q:"Which prophet was the father of Yahya and prayed for a child in his old age? (Quran)",a:"Zakariyya (Zechariah)"},
+      {q:"In Surah Aal 'Imran, which prophet found out-of-season provision with Maryam in her prayer chamber, moving him to pray for a child?",a:"Zakariyya (Zechariah)"},
       {q:"Which prophet was taught to make coats of armour and could mould iron? (Quran)",a:"Dawud (David)"},
       {q:"Which prophet is mentioned as having been raised by Allah to a high station (Surah Maryam)?",a:"Idris"},
       {q:"In a Sahih hadith, who is the first whose grave will open on the Day of Resurrection?",a:"Prophet Muhammad ﷺ"},
-      {q:"Which prophet's son refused to board the Ark and drowned in the flood? (Surah Hud)",a:"Nuh (Noah)"},
+      {q:"In Surah Hud, where did Nuh's son say he would take refuge from the flood?",a:"A mountain"},
       {q:"What was the name of Prophet Ibrahim's wife who was given news of Ishaq in her old age? (Quran)",a:"Sarah"},
       {q:"Which prophet was given prophethood while still a child, according to Surah Maryam?",a:"Yahya (John)"},
       {q:"Which prophet's story includes being sold into slavery and later becoming a minister in Egypt? (Quran)",a:"Yusuf (Joseph)"},
       {q:"What is the name of the mountain where Prophet Musa spoke to Allah? (Quran)",a:"Mount Tur (Sinai)"},
-      {q:"Which prophet was tested by losing his wealth, children and health, yet remained patient? (Quran)",a:"Ayyub (Job)"},
+      {q:"Which prophet was told to strike the ground with his foot, and Allah brought out a cool spring for him to wash in and drink? (Surah Sad)",a:"Ayyub (Job)"},
       {q:"In Sahih Bukhari, who was the first person to believe in the Prophet ﷺ among women?",a:"Khadijah (his wife)"},
       {q:"Which two angels are named in the Quran (besides Jibril) commonly cited in Sahih tradition for specific roles? Name one.",a:"Mika'il (Michael) / Israfil"},
       {q:"Which prophet does the Quran describe as having been given the ability to revive the dead, mould birds from clay by Allah's leave? (Quran)",a:"Isa (Jesus)"},
       {q:"Which Surah is named after the family of a prophet's lineage and means 'The Family of Imran'?",a:"Surah Aal 'Imran"},
-      {q:"Which prophet was swallowed by the fish and called upon Allah with the words of 'La ilaha illa anta...' (the dua of Yunus)? (Quran)",a:"Yunus (Jonah)"},
+      {q:"Complete the dua made from inside the belly of the fish: 'La ilaha illa anta, subhanak...' (Surah Al-Anbiya)",a:"Inni kuntu min adh-dhalimin"},
       {q:"In Sahih hadith, how many prophets are commonly said to have been sent (approx, a number cited in hadith)? (±1000)",a:"~124,000",leeway:"±1000"},
     ],
   },
@@ -833,7 +903,7 @@ const BANK = {
       {q:"What is the name of the three-pointed star car brand?",a:"Mercedes-Benz"},
       {q:"Which brand makes the Civic and the Accord?",a:"Honda"},
       {q:"What does 'SUV' stand for?",a:"Sport Utility Vehicle"},
-      {q:"Which German brand uses the slogan 'The Ultimate Driving Machine'?",a:"BMW"},
+      {q:"Which Italian car brand's logo is a trident?",a:"Maserati"},
       {q:"What is the luxury division of Toyota?",a:"Lexus"},
       {q:"Which brand makes the Corvette?",a:"Chevrolet"},
       {q:"What part of a car stores energy to start the engine?",a:"Battery"},
@@ -865,7 +935,7 @@ const BANK = {
       {q:"Which country is the brand Volvo originally from?",a:"Sweden"},
       {q:"Which brand makes the Model S, Model 3, Model X and Model Y?",a:"Tesla"},
       {q:"Which French brand makes the Clio and the Mégane?",a:"Renault"},
-      {q:"Which brand's logo is a blue and white roundel said to represent a spinning propeller?",a:"BMW"},
+      {q:"Which British brand, maker of the DB series, is famous as James Bond's car of choice?",a:"Aston Martin"},
       {q:"Which French car brand designed the iconic DS, often called one of the most beautiful cars ever made?",a:"Citroën"},
       {q:"Which Lamborghini model, named after a Spanish fighting bull, succeeded the Diablo in 2001?",a:"Murciélago"},
     ],
@@ -1250,8 +1320,20 @@ function toggleTopic(id){
 }
 
 /* ---------------- STEP 3: BOARD ---------------- */
+/* Best-effort fullscreen + landscape lock (works on Android Chrome; iOS ignores it
+   and relies on the rotate overlay instead). Must be called from a user gesture. */
+function tryLandscapeLock(){
+  try{
+    if(screen.orientation && screen.orientation.lock){
+      const p=document.documentElement.requestFullscreen?document.documentElement.requestFullscreen():Promise.resolve();
+      Promise.resolve(p).then(()=>screen.orientation.lock('landscape')).catch(()=>{});
+    }
+  }catch(e){}
+}
+
 function startGame(){
   if(state.chosen.length!==6)return;
+  tryLandscapeLock();
   // labels
   ['sbA','lblA2','fA'].forEach(id=>document.getElementById(id).textContent=state.teamA);
   ['sbB','lblB2','fB'].forEach(id=>document.getElementById(id).textContent=state.teamB);
@@ -1276,7 +1358,6 @@ function buildBoard(){
     // Left column (Team A) — tiers top to bottom
     const left=document.createElement('div');
     left.className='ptcol';
-    left.innerHTML=`<div class="sidelabel" style="color:var(--teamA)">${state.teamA}</div>`;
     // Center
     const center=document.createElement('div');
     center.className='center-cell';
@@ -1284,7 +1365,6 @@ function buildBoard(){
     // Right column (Team B)
     const right=document.createElement('div');
     right.className='ptcol';
-    right.innerHTML=`<div class="sidelabel" style="color:var(--teamB)">${state.teamB}</div>`;
 
     TIERS.forEach(tier=>{
       left.appendChild(makeTile(topicId,tier,'L'));
@@ -1302,7 +1382,7 @@ function buildBoard(){
 function makeTile(topicId,tier,side){
   const id=topicId+'-'+tier+'-'+side;
   const btn=document.createElement('button');
-  btn.className='tile';
+  btn.className='tile '+(side==='L'?'tA':'tB');
   btn.id='tile-'+id;
   const lw = (topicId==='football')?'<small>±10</small>':(topicId==='cars')?'<small>±1y</small>':'';
   btn.innerHTML=tier+lw;
@@ -1342,7 +1422,12 @@ function openQuestion(topicId,tier,side,tileId,team){
   hw.innerHTML='';
   if(topicId==='letters'){
     const first=item.a.trim()[0].toUpperCase();
-    hw.innerHTML=`<div class="qhint">Hint — starts with: ${first}</div>`;
+    let cells='';
+    for(let i=65;i<=90;i++){
+      const ch=String.fromCharCode(i);
+      cells+=`<span class="abc${ch===first?' lit':''}">${ch}</span>`;
+    }
+    hw.innerHTML=`<div class="abcgrid">${cells}</div>`;
   }
   if(item.leeway){
     hw.innerHTML+=`<div class="leeway">Leeway: ${item.leeway} (host's judgment)</div>`;
