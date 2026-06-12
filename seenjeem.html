@@ -281,6 +281,9 @@
     font-weight:700;cursor:pointer;font-size:14px;transition:transform .07s;}
   .verdict:active{transform:scale(.94);}
   .verdict.on{border-color:var(--orange);color:var(--orange-soft);background:rgba(255,122,26,.12);}
+  .revcard .freetext{width:100%;margin-top:12px;padding:12px 14px;border-radius:12px;border:2px solid var(--line);
+    background:#15152a;color:var(--txt);font-family:'Cairo';font-size:15px;min-height:60px;resize:vertical;outline:none;}
+  .revcard .freetext:focus{border-color:var(--orange);}
   .revempty{text-align:center;color:var(--muted);padding:50px 20px;font-size:18px;line-height:1.7;}
   .reviewnote{background:rgba(255,122,26,.1);border:1px solid var(--orange);border-radius:14px;padding:14px 18px;
     color:var(--orange-soft);font-size:14px;line-height:1.6;margin-bottom:18px;}
@@ -601,7 +604,7 @@ const BANK = {
       {q:"What is the tallest land animal?",a:"Giraffe"},
       {q:"What is the fastest land animal?",a:"Cheetah"},
       {q:"What is the largest ocean on Earth?",a:"Pacific"},
-      {q:"What gas do humans need to breathe to survive?",a:"Oxygen"},
+      {q:"Which bird is the only one that can fly backwards?",a:"Hummingbird"},
       {q:"What is the closest star to Earth?",a:"Sun"},
       {q:"What is the hardest natural substance on Earth?",a:"Diamond"},
       {q:"What is the largest mammal in the world?",a:"Whale"},
@@ -619,7 +622,7 @@ const BANK = {
       {q:"What is the name of the imaginary line at 0° latitude that splits Earth into northern and southern halves?",a:"Equator"},
       {q:"What is the main language spoken in Egypt?",a:"Arabic"},
       {q:"Who wrote the plays 'Romeo and Juliet' and 'Hamlet'?",a:"Shakespeare"},
-      {q:"What is the painting by Leonardo da Vinci of a smiling woman called?",a:"Mona Lisa"},
+      {q:"What is the name of the natural light display seen near the poles, also known as the northern lights?",a:"Aurora"},
       {q:"Which scientist developed the theory of relativity?",a:"Einstein"},
     ],
     400:[
@@ -642,11 +645,12 @@ const BANK = {
       {q:"What is the capital of Australia?",a:"Canberra"},
       {q:"What is the gas that makes up most of Earth's atmosphere?",a:"Nitrogen"},
       {q:"Which sea creature has three hearts and blue blood?",a:"Octopus"},
-      {q:"What is the largest species of big cat?",a:"Tiger"},
+      {q:"What is the name of the deepest lake in the world, located in Siberia?",a:"Baikal"},
       {q:"What is the name of the galaxy we live in?",a:"Milky Way"},
       {q:"What is the hardest working muscle in the body, that never rests?",a:"Heart"},
       {q:"What is the study of the structure and function of the nervous system called?",a:"Neuroscience"},
       {q:"What is the term for an animal that eats both plants and meat?",a:"Omnivore"},
+      {q:"What is the hard protein that makes up hair, nails, and animal horns?",a:"Keratin"},
     ],
     600:[
       {q:"Which noble gas is used in high-intensity car headlamps and spacecraft ion thrusters?",a:"Xenon"},
@@ -659,7 +663,7 @@ const BANK = {
       {q:"What is the SI unit of electrical resistance?",a:"Ohm"},
       {q:"Which element, essential to DNA and bones, glows faintly in the dark and ignites easily in air?",a:"Phosphorus"},
       {q:"What is the name for a word that reads the same forwards and backwards?",a:"Palindrome"},
-      {q:"What is the hard protein that makes up hair, nails, and animal horns?",a:"Keratin"},
+      {q:"What is the term for the point in a planet's orbit closest to the Sun?",a:"Perihelion"},
       {q:"Which Greek letter is used in physics to represent wavelength?",a:"Lambda"},
       {q:"Which metal has the highest melting point of any metal?",a:"Tungsten"},
       {q:"What is the curved path of a projectile under gravity called?",a:"Parabola"},
@@ -683,7 +687,7 @@ const BANK = {
       {q:"Which European club competition is contested between the top clubs across Europe each season?",a:"Champions League"},
       {q:"Which English club is nicknamed 'The Citizens'?",a:"Manchester City"},
       {q:"Which country has won the most men's World Cups?",a:"Brazil"},
-      {q:"Which body part can a goalkeeper use in the box that outfield players cannot?",a:"Hands"},
+      {q:"Which country hosted the 2022 FIFA World Cup?",a:"Qatar"},
       {q:"How many points are awarded for a win in most leagues?",a:"3"},
       {q:"Real Madrid plays its home games in which country?",a:"Spain"},
       {q:"Which player is nicknamed 'The Egyptian King' at Liverpool?",a:"Mohamed Salah"},
@@ -696,23 +700,25 @@ const BANK = {
       {q:"How many halves are there in a football match?",a:"Two"},
       {q:"Which club is nicknamed 'The Gunners'?",a:"Arsenal"},
       {q:"What do you call the area a goalkeeper defends?",a:"Goal"},
-      {q:"Which country do Barcelona and Real Madrid come from?",a:"Spain"},
+      {q:"In which city is the famous Wembley Stadium?",a:"London"},
       {q:"What is awarded when the ball goes out over the side line?",a:"Throw-in"},
       {q:"Which trophy is awarded to the best individual player by France Football each year?",a:"Ballon d'Or"},
+      {q:"Which club has won the most UEFA Champions League titles?",a:"Real Madrid"},
+      {q:"Which club did Thierry Henry join when he left Arsenal in 2007?",a:"Barcelona"},
     ],
     400:[
       {q:"How many men's World Cups has Brazil won?",a:"5"},
-      {q:"Which club has won the most UEFA Champions League titles?",a:"Real Madrid"},
+      {q:"Which club did Pep Guardiola manage immediately before joining Manchester City?",a:"Bayern Munich"},
       {q:"In what year was the first ever FIFA World Cup held? (±1 year)",a:"1930",leeway:"±1 year"},
       {q:"In what year did Spain win their first FIFA World Cup? (±1 year)",a:"2010",leeway:"±1 year"},
       {q:"Which club has won the second-most European Cup / Champions League titles after Real Madrid?",a:"AC Milan"},
       {q:"Who scored the 'Hand of God' goal at the 1986 World Cup?",a:"Diego Maradona"},
       {q:"Which Italian club is nicknamed 'I Bianconeri'?",a:"Juventus"},
       {q:"Who is the all-time top scorer in men's World Cup history (as of 2022)?",a:"Miroslav Klose"},
-      {q:"What is the maximum number of substitutions allowed in most modern matches?",a:"5"},
+      {q:"How many European Championships has Germany won, including as West Germany?",a:"3"},
       {q:"Which country won the first European Championship in 1960?",a:"Soviet Union"},
       {q:"Which manager led Manchester United during the 1999 treble?",a:"Alex Ferguson"},
-      {q:"Which club did Thierry Henry join when he left Arsenal in 2007?",a:"Barcelona"},
+      {q:"Which country won Euro 2004 in one of football's greatest upsets?",a:"Greece"},
       {q:"In the 2011-12 season, Lionel Messi set the record for most goals in a calendar year. How many?",a:"91"},
       {q:"Which country won the 2014 World Cup, hosted in Brazil?",a:"Germany"},
       {q:"Which French forward won the 2022 World Cup Golden Boot?",a:"Kylian Mbappé"},
@@ -724,6 +730,7 @@ const BANK = {
       {q:"Which English stadium is known as the 'Theatre of Dreams'?",a:"Old Trafford"},
       {q:"What is the most goals scored by a single player in one World Cup tournament (Just Fontaine, 1958)? (±1)",a:"13",leeway:"±1"},
       {q:"Which Brazilian is the only player to have won the FIFA World Cup three times?",a:"Pelé"},
+      {q:"To which division was Juventus relegated in the 2006 Calciopoli scandal?",a:"Serie B"},
     ],
     600:[
       {q:"Which goalkeeper captained Spain to victory at the 2010 World Cup?",a:"Iker Casillas"},
@@ -733,8 +740,8 @@ const BANK = {
       {q:"How many goals did Pelé score for Brazil, a record later matched by Neymar? (±5)",a:"77",leeway:"±5"},
       {q:"Who won the first ever Ballon d'Or in 1956?",a:"Stanley Matthews"},
       {q:"Which club did Sir Bobby Robson NOT manage: Barcelona, PSV, Newcastle, or Liverpool?",a:"Liverpool"},
-      {q:"In what year did the offside rule change to require two defenders instead of three (the 1925 change)? (±2 years)",a:"1925",leeway:"±2 years"},
-      {q:"Which Italian club was stripped of two titles and relegated in the 2006 Calciopoli scandal?",a:"Juventus"},
+      {q:"Who scored the fastest goal in World Cup history, after just 11 seconds, against South Korea in 2002?",a:"Hakan Şükür"},
+      {q:"Who missed the decisive penalty in the 1994 World Cup final shootout against Brazil?",a:"Roberto Baggio"},
       {q:"Which African nation reached the World Cup semi-finals in 2022, a first for Africa?",a:"Morocco"},
       {q:"Who was the top scorer at the 1986 World Cup, an England striker?",a:"Gary Lineker"},
       {q:"Which club finished runners-up in the first ever Premier League season (1992-93)?",a:"Aston Villa"},
@@ -767,12 +774,13 @@ const BANK = {
       {q:"Which superhero can climb walls and shoot webs?",a:"Spider-Man"},
       {q:"Which long-running animated show follows a family living in Springfield?",a:"The Simpsons"},
       {q:"Which 2009 Pixar film features an old man flying his house with thousands of balloons?",a:"Up"},
-      {q:"In which 1985 film does Marty McFly travel through time in a DeLorean?",a:"Back to the Future"},
+      {q:"What is the name of the scientist who invents the time machine in 'Back to the Future'?",a:"Doc Brown"},
       {q:"What is the name of the green Jedi master who speaks in reversed sentences?",a:"Yoda"},
-      {q:"Which Pixar film follows a young Mexican boy who journeys to the Land of the Dead to find his musician ancestor?",a:"Coco"},
+      {q:"What is the name of the boy who dreams of becoming a musician in Pixar's 'Coco'?",a:"Miguel"},
       {q:"What colour is the ogre Shrek?",a:"Green"},
       {q:"In Disney's 'Aladdin', what is the name of the big blue character who grants wishes?",a:"Genie"},
       {q:"Which superhero team includes Iron Man, Thor, and Captain America?",a:"The Avengers"},
+      {q:"Which Pixar film takes place inside the mind of a girl named Riley?",a:"Inside Out"},
     ],
     400:[
       {q:"Who directed the 1997 film 'Titanic'?",a:"James Cameron"},
@@ -783,7 +791,7 @@ const BANK = {
       {q:"Which 1999 film starring Brad Pitt and Edward Norton is famous for the rule 'you do not talk about it'?",a:"Fight Club"},
       {q:"Who voices Woody in Toy Story?",a:"Tom Hanks"},
       {q:"What movie features the line 'I'll be back'?",a:"The Terminator"},
-      {q:"Which Pixar film takes place inside the mind of a girl named Riley?",a:"Inside Out"},
+      {q:"In 'Breaking Bad', what alias does Walter White use in the drug world?",a:"Heisenberg"},
       {q:"Which 2019 film features Joaquin Phoenix as a failed comedian descending into madness in Gotham?",a:"Joker"},
       {q:"Who directed 'Inception' and 'Interstellar'?",a:"Christopher Nolan"},
       {q:"Which 1999 sci-fi film stars Keanu Reeves as Neo?",a:"The Matrix"},
@@ -795,7 +803,7 @@ const BANK = {
       {q:"Which actor played Han Solo in the original 'Star Wars' trilogy?",a:"Harrison Ford"},
       {q:"Who directed 'Jaws', 'E.T.', and 'Jurassic Park'?",a:"Steven Spielberg"},
       {q:"Which 2009 James Cameron film, set on Pandora, was the first to gross over $2 billion?",a:"Avatar"},
-      {q:"What is the name of the prison island in the show 'Prison Break'? (general show fame)",a:"Fox River (the show is Prison Break)"},
+      {q:"In 'Prison Break', what is the name of the penitentiary Michael Scofield breaks his brother out of?",a:"Fox River"},
       {q:"Which actress played Hermione Granger in the Harry Potter films?",a:"Emma Watson"},
     ],
     600:[
@@ -846,6 +854,8 @@ const BANK = {
       {q:"How many years is it commonly said the Prophet ﷺ received revelation over (approx)? (±3)",a:"23",leeway:"±3"},
       {q:"What is the name of Prophet Muhammad's ﷺ tribe in Makkah? (Sahih)",a:"Quraysh"},
       {q:"What is the name of the first city the Prophet ﷺ migrated to (the Hijrah)?",a:"Madinah (Medina)"},
+      {q:"What was the name of Prophet Ibrahim's first son? (Quran)",a:"Isma'il (Ishmael)"},
+      {q:"Which prophet's story includes being sold into slavery and later becoming a minister in Egypt? (Quran)",a:"Yusuf (Joseph)"},
     ],
     400:[
       {q:"Which prophet, by Allah's permission, could heal the blind and the leper and give life to the dead? (Quran)",a:"Isa (Jesus)"},
@@ -861,9 +871,9 @@ const BANK = {
       {q:"Which Surah, named after a prophet, is called 'the best of stories' (ahsan al-qasas)?",a:"Surah Yusuf"},
       {q:"Which prophet's people were known as the people of Madyan? (Quran)",a:"Shu'ayb"},
       {q:"Which prophet was the brother of Musa and helped him speak to Pharaoh? (Quran)",a:"Harun (Aaron)"},
-      {q:"What was the name of Prophet Ibrahim's first son? (Quran)",a:"Isma'il (Ishmael)"},
+      {q:"Who is the only woman mentioned by name in the Quran?",a:"Maryam (Mary)"},
       {q:"What was the name of Prophet Ibrahim's second son, father of Ya'qub? (Quran)",a:"Ishaq (Isaac)"},
-      {q:"Which prophet built and preached for a very long time before the great flood? (Quran)",a:"Nuh (Noah)"},
+      {q:"In Surah Al-Kahf, what did Al-Khidr do to the boat belonging to the poor sailors?",a:"He made a hole in it"},
       {q:"At which battle did the Muslims dig a trench around Madinah to defend against the confederate armies? (Sahih)",a:"Battle of al-Khandaq (the Trench)"},
       {q:"Who was the closest companion of the Prophet ﷺ, who accompanied him in the cave during the Hijrah? (Sahih)",a:"Abu Bakr (as-Siddiq)"},
       {q:"What is the name of the angel responsible for the trumpet on the Day of Judgement? (Sahih)",a:"Israfil"},
@@ -881,7 +891,7 @@ const BANK = {
       {q:"In Surah Hud, where did Nuh's son say he would take refuge from the flood?",a:"A mountain"},
       {q:"What was the name of Prophet Ibrahim's wife who was given news of Ishaq in her old age? (Quran)",a:"Sarah"},
       {q:"Which prophet was given prophethood while still a child, according to Surah Maryam?",a:"Yahya (John)"},
-      {q:"Which prophet's story includes being sold into slavery and later becoming a minister in Egypt? (Quran)",a:"Yusuf (Joseph)"},
+      {q:"In Surah Yusuf, the witness said Yusuf's innocence would be proven if his shirt was torn from which side?",a:"The back"},
       {q:"What is the name of the mountain where Prophet Musa spoke to Allah? (Quran)",a:"Mount Tur (Sinai)"},
       {q:"Which prophet was told to strike the ground with his foot, and Allah brought out a cool spring for him to wash in and drink? (Surah Sad)",a:"Ayyub (Job)"},
       {q:"In Sahih Bukhari, who was the first person to believe in the Prophet ﷺ among women?",a:"Khadijah (his wife)"},
@@ -908,9 +918,9 @@ const BANK = {
       {q:"Which brand makes the Corvette?",a:"Chevrolet"},
       {q:"What part of a car stores energy to start the engine?",a:"Battery"},
       {q:"Which Italian brand makes the Huracán and Aventador?",a:"Lamborghini"},
-      {q:"What pedal do you press to stop a car?",a:"Brake"},
+      {q:"What does 'V8' mean when describing a car engine?",a:"Eight cylinders (in a V shape)"},
       {q:"Which Japanese brand makes the Land Cruiser?",a:"Toyota"},
-      {q:"What is the name of the brand with a leaping jaguar logo?",a:"Jaguar"},
+      {q:"Which animal appears on the Lamborghini logo?",a:"Bull"},
       {q:"How many wheels does a standard car have?",a:"Four"},
       {q:"Which brand makes the 911 and the Cayenne?",a:"Porsche"},
       {q:"What do you call a car powered only by electricity?",a:"Electric car (EV)"},
@@ -922,7 +932,7 @@ const BANK = {
       {q:"Which brand makes the iconic 911 sports car?",a:"Porsche"},
       {q:"In what year was Tesla founded? (±1 year)",a:"2003",leeway:"±1 year"},
       {q:"Which Japanese brand makes the GT-R (Skyline)?",a:"Nissan"},
-      {q:"Which British brand is famous for the Range Rover?",a:"Land Rover"},
+      {q:"Which British sports-car maker, founded by Colin Chapman, lived by the mantra 'simplify, then add lightness'?",a:"Lotus"},
       {q:"Which Korean brand makes the Sonata and Elantra?",a:"Hyundai"},
       {q:"In what year was the original Mini (classic) launched? (±1 year)",a:"1959",leeway:"±1 year"},
       {q:"Which luxury brand owned by Volkswagen makes the Continental GT?",a:"Bentley"},
@@ -934,7 +944,7 @@ const BANK = {
       {q:"Which American muscle car shares its name with a wild horse?",a:"Ford Mustang"},
       {q:"Which country is the brand Volvo originally from?",a:"Sweden"},
       {q:"Which brand makes the Model S, Model 3, Model X and Model Y?",a:"Tesla"},
-      {q:"Which French brand makes the Clio and the Mégane?",a:"Renault"},
+      {q:"Alpine, the French sports-car maker famous for the A110, is owned by which automaker?",a:"Renault"},
       {q:"Which British brand, maker of the DB series, is famous as James Bond's car of choice?",a:"Aston Martin"},
       {q:"Which French car brand designed the iconic DS, often called one of the most beautiful cars ever made?",a:"Citroën"},
       {q:"Which Lamborghini model, named after a Spanish fighting bull, succeeded the Diablo in 2001?",a:"Murciélago"},
@@ -1581,7 +1591,7 @@ function flagCurrent(btnId){
   // avoid duplicate flag of the exact same Q in this session
   const exists=state.flags.find(f=>f.q===q && f.a===cur.a && f.tier===cur.tier && f.topic===topicName);
   if(exists){toast('Already flagged');return;}
-  state.flags.push({topic:topicName,topicId:cur.topicId,tier:cur.tier,q:q,a:cur.a,verdicts:[]});
+  state.flags.push({topic:topicName,topicId:cur.topicId,tier:cur.tier,q:q,a:cur.a,verdicts:[],note:''});
   saveFlags();
   const btn=document.getElementById(btnId);
   if(btn){btn.classList.add('flagged');btn.textContent='✓ Flagged — open Review later';}
@@ -1641,7 +1651,8 @@ function renderReview(){
       </div>
       <div class="qq">${escapeHtml(f.q)}</div>
       <div class="aa">Answer: ${escapeHtml(f.a)}</div>
-      <div class="verdicts">${vbtns}</div>`;
+      <div class="verdicts">${vbtns}</div>
+      <textarea class="freetext" placeholder="Optional — type exactly what's wrong with this question, in your own words" oninput="setNote(${idx},this.value)">${escapeHtml(f.note||'')}</textarea>`;
     wrap.appendChild(card);
   });
 }
@@ -1655,6 +1666,13 @@ function toggleVerdict(idx,v){
   renderReview();
 }
 
+/* free-text note per flag — saved as you type; no re-render (would steal focus) */
+function setNote(idx,val){
+  if(!state.flags[idx])return;
+  state.flags[idx].note=val;
+  saveFlags();
+}
+
 function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 function buildReviewText(){
@@ -1664,7 +1682,9 @@ function buildReviewText(){
   state.flags.forEach((f,i)=>{
     out+=(i+1)+'. ['+f.topic+' / '+f.tier+'] '+f.q+'\n';
     out+='   Answer: '+f.a+'\n';
-    out+='   Verdict: '+(f.verdicts.length?f.verdicts.join(', '):'(none selected)')+'\n\n';
+    out+='   Verdict: '+(f.verdicts.length?f.verdicts.join(', '):'(none selected)')+'\n';
+    if(f.note&&f.note.trim())out+='   My note: '+f.note.trim()+'\n';
+    out+='\n';
   });
   return out;
 }
