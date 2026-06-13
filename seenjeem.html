@@ -276,6 +276,11 @@
   .revcard .tg.pts{background:var(--orange);color:#FFFFFF;}
   .revcard .qq{font-weight:800;font-size:18px;line-height:1.4;}
   .revcard .aa{color:var(--good);font-weight:700;margin-top:4px;}
+  .revcard .flagx{margin-left:auto;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--muted);font-weight:900;font-size:17px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:transform .07s;}
+  .revcard .flagx:hover{border-color:var(--bad);color:var(--bad);}
+  .revcard .flagx:active{transform:scale(.88);}
   .verdicts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
   .verdict{padding:9px 14px;border-radius:12px;border:2px solid var(--line);background:#FFFFFF;color:var(--muted);
     font-weight:700;cursor:pointer;font-size:14px;transition:transform .07s;}
@@ -1762,6 +1767,7 @@ function renderReview(){
       <div class="meta">
         <span class="tg">${f.topic}</span>
         <span class="tg pts">${f.tier}</span>
+        <button class="flagx" onclick="removeFlag(${idx})" aria-label="Remove this flag" title="Remove this flag">✕</button>
       </div>
       <div class="qq">${escapeHtml(f.q)}</div>
       <div class="aa">Answer: ${escapeHtml(f.a)}</div>
@@ -1778,6 +1784,16 @@ function toggleVerdict(idx,v){
   else f.verdicts.push(v);
   saveFlags();
   renderReview();
+}
+
+/* remove a single flag from the review list (the ✕ on each card) */
+function removeFlag(idx){
+  if(idx<0||idx>=state.flags.length)return;
+  state.flags.splice(idx,1);
+  saveFlags();
+  updateFlagCount();
+  renderReview();
+  toast('Flag removed');
 }
 
 /* free-text note per flag — saved as you type; no re-render (would steal focus) */
